@@ -311,6 +311,27 @@ class Doughnut {
         if (!hoverDimInfo && this._outerPaths != null) {
             hoverDimInfo = this._checkMousePathsDims(this._outerDims, this._outerPaths, x, y);
         }
+        // Fallback: clicks on the label band (outside the colored outer ring but still
+        // pointing at a labelled segment) should select that segment by angle.
+        if (!hoverDimInfo && this._outerDims.length() > 0) {
+            const dx = x - this._middleX;
+            const dy = y - this._middleY;
+            const r = Math.sqrt(dx * dx + dy * dy);
+            if (r > this._outOuter && r <= this._donutSize / 2) {
+                const n = this._outerDims.length();
+                let theta = Math.atan2(dy, dx);
+                if (theta < 0) theta += 2 * Math.PI;
+                const dimIdx = Math.floor(theta / (2 * Math.PI / n)) % n;
+                const subpaths = this._outerPaths[dimIdx];
+                hoverDimInfo = {
+                    dim_num: dimIdx,
+                    dim_type: this._outerDims.type,
+                    dim_info: this._outerDims.get(dimIdx),
+                    lvl_num: 0,
+                    path: subpaths && subpaths[0],
+                };
+            }
+        }
         return hoverDimInfo;
     }
 
