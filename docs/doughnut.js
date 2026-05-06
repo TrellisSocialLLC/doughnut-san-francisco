@@ -244,7 +244,12 @@ class Doughnut {
     }
 
     _checkMouse(e, click) {
-        let hoverDimInfo = this._checkMouseOver(e.offsetX, e.offsetY);
+        // Canvas may be CSS-scaled (responsive layout) while its intrinsic resolution
+        // stays at _donutSize. Hit-testing runs in intrinsic coords, so rescale here.
+        const rect = this._canvas.getBoundingClientRect();
+        const x = (e.clientX - rect.left) * (this._canvas.width / rect.width);
+        const y = (e.clientY - rect.top) * (this._canvas.height / rect.height);
+        let hoverDimInfo = this._checkMouseOver(x, y);
         let hoverText = "";
         if (hoverDimInfo) {
             this._canvas.style.cursor = "crosshair";
