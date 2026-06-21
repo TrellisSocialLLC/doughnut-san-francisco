@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santa Cruz Doughnut Economics</title>
+    <title>San Francisco Doughnut Economics</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -89,7 +89,7 @@
         .theme-toggle:hover { background: rgba(255,255,255,0.18); }
         .theme-icon { font-size: 1rem; line-height: 1; }
 
-        /* Jurisdiction switcher */
+        /* Jurisdiction switcher - Configured for San Francisco */
         .jurisdiction-switcher {
             display: flex;
             gap: 2px;
@@ -331,143 +331,4 @@
         }
         .detail-source a {
             color: #3b82f6;
-            text-decoration: none;
-            font-size: 0.82rem;
-            display: block;
-            margin-bottom: 0.15rem;
-            font-weight: 500;
-        }
-        .detail-source a:hover { text-decoration: underline; }
-        .source-screenshot {
-            width: 100%;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-top: 0.4rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .source-screenshot:hover { transform: scale(1.02); }
-
-        .detail-actions { margin-top: 0.75rem; }
-        .detail-actions h4 {
-            font-size: 0.68rem;
-            color: var(--accent);
-            margin-bottom: 0.35rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 700;
-        }
-        .detail-actions ul { list-style: none; }
-        .detail-actions li {
-            padding: 0.4rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.82rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.4rem;
-            line-height: 1.45;
-            color: var(--text-muted);
-        }
-        .detail-actions li::before {
-            content: "\2192";
-            color: var(--accent);
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.88);
-            z-index: 1000;
-            cursor: pointer;
-            justify-content: center;
-            align-items: center;
-        }
-        .lightbox.active { display: flex; }
-        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; }
-
-        /* Responsive */
-        @media (max-width: 960px) {
-            .main-layout { grid-template-columns: 1fr; }
-            .detail-panel {
-                max-height: none;
-                border-left: none;
-                border-top: 1px solid var(--border);
-                position: relative;
-            }
-            header { padding: 0.75rem 1rem; }
-            .doughnut-section { padding: 0.75rem 0.75rem; }
-            .header-left h1 { font-size: 1rem; }
-        }
-        @media (max-width: 600px) {
-            .jurisdiction-switcher { flex-wrap: wrap; }
-            .jurisdiction-btn { font-size: 0.72rem; padding: 0.3rem 0.6rem; }
-            .page-links { gap: 0.3rem; }
-            .page-link { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-left">
-            <div>
-                <h1>Santa Cruz Doughnut Economics</h1>
-                <p>A portrait of social and ecological wellbeing</p>
-            </div>
-        </div>
-        <div class="header-right">
-            <div class="jurisdiction-switcher">
-                <button class="jurisdiction-btn active" data-key="city_santa_cruz">City of Santa Cruz</button>
-                <button class="jurisdiction-btn" data-key="santa_cruz_county">Santa Cruz County</button>
-                <button class="jurisdiction-btn" data-key="watsonville">Watsonville</button>
-            </div>
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">
-                <span class="theme-icon" id="themeIcon">&#9790;</span>
-            </button>
-        </div>
-    </header>
-
-    <div class="main-layout">
-        <div class="doughnut-section">
-            <div class="jurisdiction-info">
-                <h2 id="jurisdictionName"></h2>
-                <div class="pop" id="jurisdictionPop"></div>
-                <div class="desc" id="jurisdictionDesc"></div>
-            </div>
-            <div id="doughnutDiv">
-                <canvas id="doughnutCanvas">Your browser does not support canvas.</canvas>
-            </div>
-            <div class="doughnut-hint">Click any segment to see details, sources, and actions</div>
-            <div class="summary-strip" id="summaryStrip"></div>
-            <div class="page-links">
-                <a href="research.html" class="page-link">Data Gap Analysis</a>
-                <a href="outreach.html" class="page-link">Outreach Directory</a>
-                <a href="index-d3.html" class="page-link">D3 Visualization</a>
-                <a href="energy-deepdive.html" class="page-link">Energy Deep-Dive</a>
-                <a href="#" class="page-link" onclick="event.preventDefault(); AgentUI.showSettings()" style="opacity:0.5">AI Settings</a>
-            </div>
-        </div>
-
-        <div class="detail-panel" id="detailPanel">
-            <div class="detail-empty" id="detailEmpty">
-                <div class="detail-empty-icon">&#9737;</div>
-                Select a dimension on the doughnut to explore data, primary sources, and ways to take action.
-            </div>
-            <div class="detail-content" id="detailContent" style="display:none;"></div>
-        </div>
-    </div>
-
-    <div class="lightbox" id="lightbox">
-        <img id="lightboxImg" src="" alt="Source document">
-    </div>
-
-    <script src="doughnut.js?5.1"></script>
-    <script src="data.js"></script>
-    <script src="agent-ui.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
+            text-
